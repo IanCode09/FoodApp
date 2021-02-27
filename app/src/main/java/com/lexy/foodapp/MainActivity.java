@@ -11,8 +11,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import com.lexy.foodapp.adapter.AllMenuAdapter;
 import com.lexy.foodapp.adapter.PopularAdapter;
 import com.lexy.foodapp.adapter.RecommendedAdapter;
+import com.lexy.foodapp.model.Allmenu;
 import com.lexy.foodapp.model.FoodData;
 import com.lexy.foodapp.model.Popular;
 import com.lexy.foodapp.model.Recommended;
@@ -31,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recommendedRecyclerView;
     RecommendedAdapter recommendedAdapter;
 
+    RecyclerView allMenuRecyclerView;
+    AllMenuAdapter allMenuAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
                 getPopularData(foodDataList.get(0).getPopular());
                 getRecommendedData(foodDataList.get(0).getRecommended());
+                getAllMenuData(foodDataList.get(0).getAllmenu());
             }
 
             @Override
@@ -69,5 +75,13 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recommendedRecyclerView.setLayoutManager(layoutManager);
         recommendedRecyclerView.setAdapter(recommendedAdapter);
+    }
+
+    private void getAllMenuData(List<Allmenu> allmenuList) {
+        allMenuRecyclerView = findViewById(R.id.all_menu_recycler);
+        allMenuAdapter = new AllMenuAdapter(this, allmenuList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        allMenuRecyclerView.setLayoutManager(layoutManager);
+        allMenuRecyclerView.setAdapter(allMenuAdapter);
     }
 }
