@@ -12,8 +12,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.lexy.foodapp.adapter.PopularAdapter;
+import com.lexy.foodapp.adapter.RecommendedAdapter;
 import com.lexy.foodapp.model.FoodData;
 import com.lexy.foodapp.model.Popular;
+import com.lexy.foodapp.model.Recommended;
 import com.lexy.foodapp.retrofit.ApiInterface;
 import com.lexy.foodapp.retrofit.RetrofitClient;
 
@@ -25,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView popularRecyclerView;
     PopularAdapter popularAdapter;
+
+    RecyclerView recommendedRecyclerView;
+    RecommendedAdapter recommendedAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 List<FoodData> foodDataList = response.body();
 
                 getPopularData(foodDataList.get(0).getPopular());
+                getRecommendedData(foodDataList.get(0).getRecommended());
             }
 
             @Override
@@ -55,5 +61,13 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         popularRecyclerView.setLayoutManager(layoutManager);
         popularRecyclerView.setAdapter(popularAdapter);
+    }
+
+    private void getRecommendedData(List<Recommended> recommendedList) {
+        recommendedRecyclerView = findViewById(R.id.recommended_recycler);
+        recommendedAdapter = new RecommendedAdapter(this, recommendedList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recommendedRecyclerView.setLayoutManager(layoutManager);
+        recommendedRecyclerView.setAdapter(recommendedAdapter);
     }
 }
