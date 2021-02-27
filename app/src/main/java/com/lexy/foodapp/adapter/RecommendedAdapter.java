@@ -1,6 +1,7 @@
 package com.lexy.foodapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.lexy.foodapp.FoodDetails;
 import com.lexy.foodapp.R;
 import com.lexy.foodapp.model.Recommended;
 
@@ -40,8 +42,20 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
         holder.recommendedCharges.setText(recommendedList.get(position).getDeliveryCharges());
         holder.recommendedDeliveryTime.setText(recommendedList.get(position).getDeliveryTime());
         holder.recommendedPrice.setText("RP." + recommendedList.get(position).getPrice());
-
         Glide.with(context).load(recommendedList.get(position).getImageUrl()).into(holder.recommendedImage);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, FoodDetails.class);
+                intent.putExtra("name", recommendedList.get(position).getName());
+                intent.putExtra("price", recommendedList.get(position).getPrice());
+                intent.putExtra("rating", recommendedList.get(position).getRating());
+                intent.putExtra("image", recommendedList.get(position).getImageUrl());
+
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.lexy.foodapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.lexy.foodapp.FoodDetails;
 import com.lexy.foodapp.R;
 import com.lexy.foodapp.model.Popular;
 
@@ -38,6 +40,19 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularV
     public void onBindViewHolder(@NonNull PopularViewHolder holder, int position) {
         holder.popularName.setText(popularList.get(position).getName());
         Glide.with(context).load(popularList.get(position).getImageUrl()).into(holder.popularImage);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, FoodDetails.class);
+                intent.putExtra("name", popularList.get(position).getName());
+                intent.putExtra("price", popularList.get(position).getPrice());
+                intent.putExtra("rating", popularList.get(position).getRating());
+                intent.putExtra("image", popularList.get(position).getImageUrl());
+
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

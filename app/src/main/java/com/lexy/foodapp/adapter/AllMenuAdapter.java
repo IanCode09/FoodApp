@@ -1,6 +1,7 @@
 package com.lexy.foodapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.lexy.foodapp.FoodDetails;
 import com.lexy.foodapp.R;
 import com.lexy.foodapp.model.Allmenu;
 
@@ -41,8 +43,20 @@ public class AllMenuAdapter extends RecyclerView.Adapter<AllMenuAdapter.AllMenuV
         holder.allMenuPrice.setText(allMenuList.get(position).getPrice());
         holder.allMenuRating.setText(allMenuList.get(position).getRating());
         holder.allMenuTime.setText(allMenuList.get(position).getDeliveryTime());
-
         Glide.with(context).load(allMenuList.get(position).getImageUrl()).into(holder.allMenuImage);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, FoodDetails.class);
+                intent.putExtra("name", allMenuList.get(position).getName());
+                intent.putExtra("price", allMenuList.get(position).getPrice());
+                intent.putExtra("rating", allMenuList.get(position).getRating());
+                intent.putExtra("image", allMenuList.get(position).getImageUrl());
+
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
